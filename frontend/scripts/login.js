@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!email || !password) return showToast('Please fill all fields', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com//api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emailOrUsername: email, password: password })
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(password !== document.getElementById('customerRegConfirmPassword').value) return showToast('Passwords do not match', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, mobileNumber: mobile, password, userType: 'customer' }),
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!email || !password) return showToast('Please fill all fields', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emailOrUsername: email, password: password })
