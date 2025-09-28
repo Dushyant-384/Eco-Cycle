@@ -144,7 +144,7 @@ schedulePickupBtn.addEventListener('click', async function() {
     const address = document.getElementById('addressDisplay').textContent;
 
     try {
-        const response = await fetch('http://localhost:5000/api/pickups', {
+        const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/pickups', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -369,7 +369,7 @@ async function fetchAndDisplayCustomerHistory() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/pickups/customer', {
+        const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/pickups/customer', {
             method: 'GET',
             headers: { 'x-auth-token': token }
         });
