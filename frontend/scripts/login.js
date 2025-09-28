@@ -1,5 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- 1. SELECT ALL HTML ELEMENTS ---
+    // --- NEW: Password Strength Validation ---
+const customerRegPassword = document.getElementById('customerRegPassword');
+const customerPasswordFeedback = document.getElementById('customerPasswordFeedback');
+const collectorRegPassword = document.getElementById('collectorRegPassword');
+const collectorPasswordFeedback = document.getElementById('collectorPasswordFeedback');
+
+const passwordCriteria = {
+    length: { regex: /.{8,}/, element: customerPasswordFeedback.querySelector('#length') },
+    uppercase: { regex: /[A-Z]/, element: customerPasswordFeedback.querySelector('#uppercase') },
+    lowercase: { regex: /[a-z]/, element: customerPasswordFeedback.querySelector('#lowercase') },
+    number: { regex: /[0-9]/, element: customerPasswordFeedback.querySelector('#number') }
+};
+
+customerRegPassword.addEventListener('input', () => {
+    const password = customerRegPassword.value;
+    Object.keys(passwordCriteria).forEach(key => {
+        const criterion = passwordCriteria[key];
+        if (criterion.regex.test(password)) {
+            criterion.element.classList.add('valid');
+            criterion.element.querySelector('i').className = 'fas fa-check-circle';
+        } else {
+            criterion.element.classList.remove('valid');
+            criterion.element.querySelector('i').className = 'fas fa-times-circle';
+        }
+    });
+});
+// You can add a similar listener for collectorRegPassword if its feedback div has different IDs
+
+// --- NEW: OTP Auto-Tabbing ---
+function setupOtpAutotab(containerId) {
+    const inputs = document.querySelectorAll(`#${containerId} .otp-input`);
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+            if (input.value.length === 1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && input.value === '' && index > 0) {
+                inputs[index - 1].focus();
+            }
+        });
+    });
+}
+setupOtpAutotab('customerOtpContainer');
+setupOtpAutotab('collectorOtpContainer');
+
     // Main Containers
     const userTypeSelection = document.getElementById('userTypeSelection');
     const customerLoginContainer = document.getElementById('customerLoginContainer');
@@ -125,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!email || !password) return showToast('Please fill all fields', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emailOrUsername: email, password: password })
@@ -156,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(password !== document.getElementById('customerRegConfirmPassword').value) return showToast('Passwords do not match', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, mobileNumber: mobile, password, userType: 'customer' }),
@@ -184,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!email || !password) return showToast('Please fill all fields', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emailOrUsername: email, password: password })
@@ -215,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(password !== document.getElementById('collectorRegConfirmPassword').value) return showToast('Passwords do not match', 'error');
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/register', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, mobileNumber: mobile, password, userType: 'collector' }),

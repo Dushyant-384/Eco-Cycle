@@ -411,7 +411,7 @@ async function fetchAndDisplayCustomerHistory() {
 function getStatusBadge(status) {
     const statusClasses = {
         'pending': 'status-badge status-pending',
-        'accepted': 'status-badge status-accepted', // You may need to add CSS for this
+        'accepted': 'status-badge status-accepted', // You may need to add CSS for this class
         'completed': 'status-badge status-completed',
         'cancelled': 'status-badge status-cancelled'
     };
