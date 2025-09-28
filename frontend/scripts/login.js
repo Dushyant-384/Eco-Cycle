@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!email || !password) return showToast('Please fill all fields', 'error');
 
         try {
-            const response = await fetch('https://eco-cycle-hub-api.onrender.com//api/auth/login', {
+            const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emailOrUsername: email, password: password })
