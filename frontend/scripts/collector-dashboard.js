@@ -108,7 +108,7 @@ async function fetchAndDisplayPickups() {
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/pickups/collector/available', {
+        const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/pickups/collector/available', {
             method: 'GET',
             headers: {
                 'x-auth-token': token
@@ -178,7 +178,7 @@ async function fetchAndDisplayPickupHistory() {
     if (!token) return;
 
     try {
-        const response = await fetch('http://localhost:5000/api/pickups/collector/history', {
+        const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/pickups/collector/history', {
             method: 'GET',
             headers: { 'x-auth-token': token }
         });
@@ -234,7 +234,7 @@ collectorMainContent.addEventListener('click', async (e) => {
     if (target.classList.contains('accept-job-btn')) {
         if (!token) return showToast('You must be logged in.', 'error');
         try {
-            const response = await fetch(`http://localhost:5000/api/pickups/accept/${pickupId}`, {
+            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -252,7 +252,7 @@ collectorMainContent.addEventListener('click', async (e) => {
     if (target.classList.contains('complete-pickup-btn')) {
         if (!confirm('Mark this pickup as complete?')) return;
         try {
-            const response = await fetch(`http://localhost:5000/api/pickups/complete/${pickupId}`, {
+            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/complete/${pickupId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -278,7 +278,7 @@ async function fetchAndDisplayActivePickups() {
     if (!token) return; // The main fetch function will handle the redirect
 
     try {
-        const response = await fetch('http://localhost:5000/api/pickups/collector/active', {
+        const response = await fetch('https://eco-cycle-hub-api.onrender.com/api/pickups/collector/active', {
             method: 'GET',
             headers: { 'x-auth-token': token }
         });
@@ -338,7 +338,7 @@ document.getElementById('collectorHome').addEventListener('click', async (e) => 
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/pickups/accept/${pickupId}`, {
+            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}`, {
                 method: 'PUT',
                 headers: {
                     'x-auth-token': token
