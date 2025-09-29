@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 </head>
 <body>
     <!-- Collector Dashboard -->
@@ -58,6 +59,10 @@
             <a href="#" class="nav-item" data-section="collectorSettings">
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item" data-section="collectorQRScanner">
+                <i class="fas fa-qrcode"></i>
+                <span>QR Scanner</span>
             </a>
         </nav>  
 
@@ -622,6 +627,21 @@
                     </div>
                 </div>
             </section>
+            <!-- Collector QR Scanner Section -->
+<section class="dashboard-section" id="collectorQRScanner">
+    <h2 style="margin-bottom: 1.5rem;">QR Scanner</h2>
+    <div class="qr-scanner-container">
+        <p>Scan the customer's QR code to verify pickup details quickly.</p>
+        <div class="scanner-container">
+            <div id="qr-reader" style="width: 100%; max-width: 500px; margin: 0 auto;"></div>
+            <div id="qr-result" class="qr-result" style="display: none; margin-top: 20px;">
+                <h3>Scanned QR Code Information:</h3>
+                <div id="qr-result-data" style="padding: 1rem; background-color: var(--neutral-gray); border-radius: 8px; margin-top: 10px;"></div>
+                <button id="reset-scanner-btn" class="btn" style="margin-top: 15px;">Scan Another</button>
+            </div>
+        </div>
+    </div>
+</section>
         </main>
     </div>
 
