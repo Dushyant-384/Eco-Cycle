@@ -72,6 +72,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-dark); overflow-x: 
 .password-feedback li.valid { color: var(--primary-green); } */
 
 /* New and improved styles/login.css */
+/* New and improved styles/login.css */
 :root {
     --primary-green: #27ae60;
     --primary-blue: #2980b9;
@@ -92,4 +93,379 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-dark); overflow-x: 
     justify-content: center;
     align-items: center;
     padding: 1rem;
+    background: linear-gradient(135deg, #27ae60, #2980b9, #3498db);
+    background-size: 300% 300%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+}
+@keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+.floating-icon { 
+    position: absolute; 
+    font-size: 1.5rem; 
+    color: rgba(255, 255, 255, 0.15); 
+    animation: float 20s infinite ease-in-out; 
+}
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(15deg); } }
+
+.navbar { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1rem 1.5rem; 
+    z-index: 100; 
+}
+.logo { 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: var(--white); 
+    text-decoration: none; 
+}
+.nav-links { 
+    display: flex; 
+    gap: 1rem; 
+}
+.nav-link { 
+    text-decoration: none; 
+    color: var(--white); 
+    font-weight: 500; 
+    transition: var(--transition); 
+    position: relative; 
+    font-size: 0.9rem;
+}
+.nav-link::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: -3px; 
+    left: 0; 
+    width: 0; 
+    height: 2px; 
+    background-color: var(--white); 
+    transition: var(--transition); 
+}
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+
+.form-container {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 420px;
+    z-index: 10;
+}
+.form-container h2 { 
+    text-align: center; 
+    margin-bottom: 1.5rem; 
+    color: var(--primary-green); 
+    font-weight: 700; 
+    font-size: 1.5rem;
+}
+.form-group { 
+    margin-bottom: 1.2rem; 
+}
+.form-group label { 
+    display: block; 
+    margin-bottom: 0.4rem; 
+    font-weight: 500; 
+    color: var(--text-dark); 
+    font-size: 0.9rem;
+}
+.form-group input { 
+    width: 100%; 
+    padding: 0.75rem 0.9rem; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    font-size: 0.95rem; 
+    transition: var(--transition); 
+    background-color: rgba(255, 255, 255, 0.5); 
+}
+.form-group input:focus { 
+    outline: none; 
+    border-color: var(--primary-blue); 
+    box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.2); 
+}
+
+.password-container { position: relative; }
+.password-toggle { 
+    position: absolute; 
+    right: 12px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: none; 
+    border: none; 
+    color: var(--text-light); 
+    cursor: pointer; 
+    font-size: 1rem; 
+}
+
+.btn { 
+    display: inline-block; 
+    padding: 0.75rem 1.2rem; 
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-blue)); 
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    font-size: 0.95rem; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: var(--transition); 
+    width: 100%; 
+    margin-bottom: 0.8rem; 
+}
+.btn:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+    filter: brightness(1.1); 
+}
+.btn-outline { 
+    background: transparent; 
+    border: none; 
+    color: var(--primary-blue); 
+    font-weight: 500; 
+    padding: 0; 
+    margin-top: 0.8rem; 
+    text-decoration: underline; 
+    font-size: 0.9rem;
+}
+
+.register-step { display: none; }
+.register-step.active { display: block; }
+.user-type-selection p { 
+    color: var(--text-light); 
+    margin-bottom: 1.5rem; 
+    text-align: center; 
+    font-size: 0.9rem;
+}
+.user-type-buttons { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.8rem; 
+}
+
+/* Password Validation */
+.password-feedback ul { 
+    list-style: none; 
+    padding-left: 0; 
+    margin-top: 8px; 
+    font-size: 0.75rem; 
+}
+.password-feedback li { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 4px; 
+    color: #e74c3c; 
+    transition: color 0.3s ease; 
+}
+.password-feedback li.valid { color: var(--primary-green); }
+.password-feedback li i { margin-right: 6px; font-size: 0.8rem; }
+
+/* OTP Boxes */
+.otp-container { 
+    display: flex; 
+    justify-content: space-between; 
+    gap: 8px; 
+}
+.otp-input { 
+    width: 40px; 
+    height: 45px; 
+    text-align: center; 
+    font-size: 1.2rem; 
+    font-weight: 600; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    background-color: rgba(255, 255, 255, 0.5); 
+    transition: var(--transition); 
+}
+.otp-input:focus { 
+    outline: none; 
+    border-color: var(--primary-green); 
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.2); 
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .nav-links {
+        gap: 0.8rem;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+    }
+    
+    .form-container {
+        padding: 1.2rem;
+        max-width: 100%;
+    }
+    
+    .form-container h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+        font-size: 0.85rem;
+    }
+    
+    .form-group input {
+        padding: 0.65rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .password-toggle {
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        padding: 0.65rem 1rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .btn-outline {
+        font-size: 0.85rem;
+        margin-top: 0.6rem;
+    }
+    
+    .user-type-selection p {
+        font-size: 0.85rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .user-type-buttons {
+        gap: 0.6rem;
+    }
+    
+    .password-feedback ul {
+        font-size: 0.7rem;
+    }
+    
+    .password-feedback li i {
+        font-size: 0.7rem;
+    }
+    
+    .otp-container {
+        gap: 6px;
+    }
+    
+    .otp-input {
+        width: 35px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .floating-icon {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 0.8rem;
+    }
+    
+    .navbar {
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+    }
+    
+    .nav-links {
+        gap: 0.6rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+    }
+    
+    .form-container {
+        padding: 1rem;
+    }
+    
+    .form-container h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .form-group {
+        margin-bottom: 0.8rem;
+    }
+    
+    .form-group label {
+        font-size: 0.8rem;
+    }
+    
+    .form-group input {
+        padding: 0.6rem 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .password-toggle {
+        font-size: 0.85rem;
+    }
+    
+    .btn {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-outline {
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+    }
+    
+    .user-type-selection p {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .user-type-buttons {
+        gap: 0.5rem;
+    }
+    
+    .password-feedback ul {
+        font-size: 0.65rem;
+    }
+    
+    .password-feedback li i {
+        font-size: 0.65rem;
+    }
+    
+    .otp-container {
+        gap: 5px;
+    }
+    
+    .otp-input {
+        width: 30px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .floating-icon {
+        font-size: 1rem;
+    }
+}
 
