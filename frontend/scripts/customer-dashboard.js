@@ -133,7 +133,7 @@ schedulePickupBtn.addEventListener('click', async function() {
 
     const wasteItems = [];
     wasteTypes.forEach(waste => {
-        const input = document.querySelector(`input[data-waste-id="${waste.id}"]`);
+        const input = document.querySelector(input[data-waste-id="${waste.id}"]);
         const quantity = parseFloat(input.value) || 0;
         if (quantity > 0) {
             wasteItems.push({ type: waste.name, weight: quantity });
@@ -244,7 +244,7 @@ function updateWasteCalculator() {
     let subtotal = 0;
     
     wasteTypes.forEach(waste => {
-        const input = document.querySelector(`input[data-waste-id="${waste.id}"]`);
+        const input = document.querySelector(input[data-waste-id="${waste.id}"]);
         if(input) {
             const quantity = parseFloat(input.value) || 0;
             subtotal += quantity * waste.value;
@@ -258,17 +258,17 @@ function updateWasteCalculator() {
     
     const total = Math.max(0, subtotal - effectivePickupFee);
     
-    subtotalValue.textContent = `₹${subtotal.toFixed(2)}`;
-    pickupFee.textContent = `₹${effectivePickupFee.toFixed(2)}${effectivePickupFee === 0 ? ' (Waived)' : ''}`;
-    totalValue.textContent = `₹${total.toFixed(2)}`;
+    subtotalValue.textContent = ₹${subtotal.toFixed(2)};
+    pickupFee.textContent = ₹${effectivePickupFee.toFixed(2)}${effectivePickupFee === 0 ? ' (Waived)' : ''};
+    totalValue.textContent = ₹${total.toFixed(2)};
     
     if (subtotal >= minimumPickupAmount) {
         pickupRequirement.className = 'pickup-requirement met';
-        pickupRequirement.innerHTML = `<i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> Minimum pickup amount met: ₹${minimumPickupAmount.toFixed(2)} (Current: ₹${subtotal.toFixed(2)})`;
+        pickupRequirement.innerHTML = <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i> Minimum pickup amount met: ₹${minimumPickupAmount.toFixed(2)} (Current: ₹${subtotal.toFixed(2)});
         schedulePickupBtn.disabled = false;
     } else {
         pickupRequirement.className = 'pickup-requirement not-met';
-        pickupRequirement.innerHTML = `<i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i> Minimum pickup amount: ₹${minimumPickupAmount.toFixed(2)} (Current: ₹${subtotal.toFixed(2)})`;
+        pickupRequirement.innerHTML = <i class="fas fa-info-circle" style="margin-right: 0.5rem;"></i> Minimum pickup amount: ₹${minimumPickupAmount.toFixed(2)} (Current: ₹${subtotal.toFixed(2)});
         schedulePickupBtn.disabled = true;
     }
 }
@@ -314,11 +314,11 @@ customerCancelSettingsBtn.addEventListener('click', () => {
 
 // Notification toggle functionality
 customerEmailNotifications.addEventListener('change', function() {
-    showToast(`Email notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
+    showToast(Email notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
 });
 
 customerSmsNotifications.addEventListener('change', function() {
-    showToast(`SMS notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
+    showToast(SMS notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
 });
 
 // Animate counters
@@ -345,7 +345,7 @@ function showToast(message, type = 'success') {
     const toastIcon = toast.querySelector('.toast-icon');
     
     toastMessage.textContent = message;
-    toast.className = `toast ${type} show`;
+    toast.className = toast ${type} show;
     
     if (type === 'success') {
         toastIcon.className = 'toast-icon fas fa-check-circle';
@@ -381,7 +381,7 @@ async function fetchAndDisplayCustomerHistory() {
         tableBody.innerHTML = ''; // Clear any old or sample data
 
         if (history.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">You haven't scheduled any pickups yet.</td></tr>`;
+            tableBody.innerHTML = <tr><td colspan="5" style="text-align: center;">You haven't scheduled any pickups yet.</td></tr>;
             return;
         }
 
@@ -415,5 +415,173 @@ function getStatusBadge(status) {
         'completed': 'status-badge status-completed',
         'cancelled': 'status-badge status-cancelled'
     };
-    return `<span class="${statusClasses[status] || ''}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+    return <span class="${statusClasses[status] || ''}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>;
 }
+// Customer QR Code Section Elements
+const customerPickupSelect = document.getElementById('customerPickupSelect');
+const generateCustomerQRBtn = document.getElementById('generateCustomerQRBtn');
+const customerQrcodeDiv = document.getElementById('customerQrcode');
+
+// Customer AI Camera Section Elements
+const customerVideo = document.getElementById('customerVideo');
+const customerCaptureBtn = document.getElementById('customerCaptureBtn');
+const customerClassificationResult = document.getElementById('customerClassificationResult');
+
+// Customer QR Code Section Functionality
+document.querySelector('[data-section="customerQRCode"]').addEventListener('click', function() {
+    populateCustomerPickupDropdown();
+});
+
+// Function to generate a unique ID for each pickup
+function generateUniquePickupId() {
+    // Create a unique ID using timestamp and random number
+    const timestamp = new Date().getTime();
+    const random = Math.floor(Math.random() * 1000000);
+    return ECO-${timestamp}-${random};
+}
+
+// Function to store pickup details in localStorage for later retrieval
+function storePickupDetails(pickupId, pickupDetails) {
+    // Get existing pickups or initialize empty array
+    let pickups = JSON.parse(localStorage.getItem('customerPickups') || '[]');
+    
+    // Add new pickup
+    pickups.push({
+        id: pickupId,
+        details: pickupDetails,
+        createdAt: new Date().toISOString()
+    });
+    
+    // Save back to localStorage
+    localStorage.setItem('customerPickups', JSON.stringify(pickups));
+}
+
+// Function to get pickup details by ID
+function getPickupDetails(pickupId) {
+    const pickups = JSON.parse(localStorage.getItem('customerPickups') || '[]');
+    const pickup = pickups.find(p => p.id === pickupId);
+    return pickup ? pickup.details : null;
+}
+
+function populateCustomerPickupDropdown() {
+    // Clear existing options
+    customerPickupSelect.innerHTML = '<option value="">-- Select a pickup --</option>';
+    
+    // Get the customer's pickups from localStorage
+    const pickups = JSON.parse(localStorage.getItem('customerPickups') || '[]');
+    
+    if (pickups.length === 0) {
+        // If no pickups in localStorage, use the history data from the table
+        const historyTableBody = document.getElementById('customer-history-table-body');
+        if (historyTableBody) {
+            const rows = historyTableBody.querySelectorAll('tr');
+            rows.forEach(row => {
+                const dateCell = row.cells[0].textContent;
+                const wasteTypes = row.cells[1].textContent;
+                const weight = row.cells[2].textContent;
+                const status = row.cells[3].textContent;
+                const fare = row.cells[4].textContent;
+                
+                // Generate a unique ID for this pickup
+                const pickupId = generateUniquePickupId();
+                
+                // Create pickup details object
+                const pickupDetails = {
+                    date: dateCell,
+                    wasteTypes: wasteTypes,
+                    weight: weight,
+                    status: status,
+                    fare: fare
+                };
+                
+                // Store pickup details
+                storePickupDetails(pickupId, pickupDetails);
+                
+                // Add to dropdown
+                const option = document.createElement('option');
+                option.value = pickupId;
+                option.textContent = ${dateCell} - ${wasteTypes} (${weight});
+                customerPickupSelect.appendChild(option);
+            });
+        }
+    } else {
+        // Use pickups from localStorage
+        pickups.forEach(pickup => {
+            const option = document.createElement('option');
+            option.value = pickup.id;
+            option.textContent = ${pickup.details.date} - ${pickup.details.wasteTypes} (${pickup.details.weight});
+            customerPickupSelect.appendChild(option);
+        });
+    }
+}
+
+generateCustomerQRBtn.addEventListener('click', function() {
+    const selectedPickupId = customerPickupSelect.value;
+    if (!selectedPickupId) {
+        showToast('Please select a pickup', 'error');
+        return;
+    }
+    
+    // Get pickup details
+    const pickupDetails = getPickupDetails(selectedPickupId);
+    if (!pickupDetails) {
+        showToast('Pickup details not found', 'error');
+        return;
+    }
+    
+    // Create a data object with all pickup information
+    const qrData = {
+        id: selectedPickupId,
+        date: pickupDetails.date,
+        wasteTypes: pickupDetails.wasteTypes,
+        weight: pickupDetails.weight,
+        status: pickupDetails.status,
+        fare: pickupDetails.fare,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Clear previous QR code
+    customerQrcodeDiv.innerHTML = '';
+    
+    // Generate QR code with JSON data
+    new QRCode(customerQrcodeDiv, {
+        text: JSON.stringify(qrData),
+        width: 200,
+        height: 200
+    });
+    
+    showToast('QR Code generated successfully', 'success');
+});
+
+// Customer AI Camera Section Functionality
+document.querySelector('[data-section="customerAICamera"]').addEventListener('click', function() {
+    // Request access to the camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) {
+            customerVideo.srcObject = stream;
+        })
+        .catch(function(err) {
+            console.error("Error accessing camera: " + err);
+            showToast('Could not access the camera', 'error');
+        });
+});
+
+customerCaptureBtn.addEventListener('click', function() {
+    // Capture the current frame
+    const canvas = document.createElement('canvas');
+    canvas.width = customerVideo.videoWidth;
+    canvas.height = customerVideo.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(customerVideo, 0, 0, canvas.width, canvas.height);
+    
+    // Convert to data URL (we don't actually send it anywhere for simulation)
+    const imageDataUrl = canvas.toDataURL('image/png');
+    
+    // Simulate classification by randomly selecting a waste type
+    const wasteTypes = ['Plastic', 'Paper', 'Glass', 'Metal', 'Electronic', 'Organic'];
+    const randomWaste = wasteTypes[Math.floor(Math.random() * wasteTypes.length)];
+    
+    // Display the result
+    customerClassificationResult.textContent = The waste is classified as: ${randomWaste};
+    showToast('Image captured and classified', 'success');
+});
