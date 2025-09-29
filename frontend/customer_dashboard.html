@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <!-- Customer Dashboard -->
@@ -29,7 +28,7 @@
                 <a href="index.html" class="logout-btn">Logout</a>
             </div>
         </header>
-        
+
         <!-- Sidebar -->
         <nav class="sidebar" id="sidebar">
             <a href="#" class="nav-item active" data-section="home">
@@ -52,21 +51,11 @@
                 <i class="fas fa-cog"></i>
                 <span>Settings</span>
             </a>
-            <a href="#" class="nav-item" data-section="customerQRCode">
-    <i class="fas fa-qrcode"></i>
-    <span>QR Code</span>
-</a>
-<a href="#" class="nav-item" data-section="customerAICamera">
-    <i class="fas fa-camera"></i>
-    <span>AI Camera</span>
-</a>
-            
         </nav>
 
         <!-- Main Content -->
         <main class="main-content" id="mainContent">
             <!-- Home Section -->
-             
             <section class="dashboard-section active" id="home">
                 <h2 style="margin-bottom: 1.5rem;">Dashboard Overview</h2>
                 
@@ -125,7 +114,13 @@
                                 <td><span class="status-badge status-completed">Completed</span></td>
                                 <td>95</td>
                             </tr>
-
+                            <tr>
+                                <td>2023-10-10</td>
+                                <td>Electronic</td>
+                                <td>2.1</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>210</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -250,9 +245,48 @@
                                 <td><span class="status-badge status-completed">Completed</span></td>
                                 <td>95</td>
                             </tr>
-                            
-                                
-    
+                            <tr>
+                                <td>2023-10-10</td>
+                                <td>Electronic</td>
+                                <td>2.1</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>210</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-05</td>
+                                <td>Glass</td>
+                                <td>4.5</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>135</td>
+                            </tr>
+                            <tr>
+                                <td>2023-10-01</td>
+                                <td>Metal</td>
+                                <td>6.3</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>189</td>
+                            </tr>
+                            <tr>
+                                <td>2023-09-28</td>
+                                <td>Plastic</td>
+                                <td>3.7</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>111</td>
+                            </tr>
+                            <tr>
+                                <td>2023-09-25</td>
+                                <td>Paper</td>
+                                <td>5.1</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>127</td>
+                            </tr>
+                            <tr>
+                                <td>2023-09-20</td>
+                                <td>Electronic</td>
+                                <td>1.8</td>
+                                <td><span class="status-badge status-completed">Completed</span></td>
+                                <td>180</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -379,37 +413,6 @@
                     </div>
                 </div>
             </section>
-           <!-- Customer QR Code Section -->
-<section class="dashboard-section" id="customerQRCode">
-    <h2 style="margin-bottom: 1.5rem;">QR Code Generator</h2>
-    <div class="qr-code-container">
-        <p>Generate a QR code for your scheduled pickup. The QR code will contain the pickup ID and can be scanned by the collector.</p>
-        <div class="form-group">
-            <label for="customerPickupSelect">Select Your Pickup</label>
-            <select id="customerPickupSelect" class="form-control">
-                <option value="">-- Select a pickup --</option>
-            </select>
-        </div>
-        <button id="generateCustomerQRBtn" class="btn">Generate QR Code</button>
-        <div id="customerQrcode" style="margin-top: 20px;"></div>
-    </div>
-</section>
-
-<!-- Customer AI Camera Section -->
-<section class="dashboard-section" id="customerAICamera">
-    <h2 style="margin-bottom: 1.5rem;">AI Waste Classification</h2>
-    <div class="ai-camera-container">
-        <p>Use your device camera to scan waste materials. The AI will classify the waste type to help you schedule accurately.</p>
-        <div class="camera-container">
-            <video id="customerVideo" width="640" height="480" autoplay></video>
-            <button id="customerCaptureBtn" class="btn">Capture Image</button>
-        </div>
-        <div id="customerResult" class="ai-result" style="margin-top: 20px;">
-            <h3>Classification Result:</h3>
-            <p id="customerClassificationResult">No image captured yet.</p>
-        </div>
-    </div>
-</section>
         </main>
     </div>
 
