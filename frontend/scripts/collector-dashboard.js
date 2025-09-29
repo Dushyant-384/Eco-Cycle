@@ -190,7 +190,7 @@ async function fetchAndDisplayPickupHistory() {
         tableBody.innerHTML = ''; // Clear any old data
 
         if (history.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">No past pickups found.</td></tr>`;
+            tableBody.innerHTML = <tr><td colspan="5" style="text-align: center;">No past pickups found.</td></tr>;
             return;
         }
 
@@ -234,7 +234,7 @@ collectorMainContent.addEventListener('click', async (e) => {
     if (target.classList.contains('accept-job-btn')) {
         if (!token) return showToast('You must be logged in.', 'error');
         try {
-            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}`, {
+            const response = await fetch(https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -252,7 +252,7 @@ collectorMainContent.addEventListener('click', async (e) => {
     if (target.classList.contains('complete-pickup-btn')) {
         if (!confirm('Mark this pickup as complete?')) return;
         try {
-            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/complete/${pickupId}`, {
+            const response = await fetch(https://eco-cycle-hub-api.onrender.com/api/pickups/complete/${pickupId}, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -338,7 +338,7 @@ document.getElementById('collectorHome').addEventListener('click', async (e) => 
         }
 
         try {
-            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}`, {
+            const response = await fetch(https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}, {
                 method: 'PUT',
                 headers: {
                     'x-auth-token': token
@@ -455,11 +455,11 @@ calculateFareBtn.addEventListener('click', () => {
         const total = base + distanceAmount + weightAmount + bonus;
         
         // Update UI
-        baseFare.textContent = `₹${base.toFixed(2)}`;
-        distanceFare.textContent = `₹${distanceAmount.toFixed(2)}`;
-        weightFare.textContent = `₹${weightAmount.toFixed(2)}`;
-        wasteBonus.textContent = `₹${bonus.toFixed(2)}`;
-        totalFare.textContent = `₹${total.toFixed(2)}`;
+        baseFare.textContent = ₹${base.toFixed(2)};
+        distanceFare.textContent = ₹${distanceAmount.toFixed(2)};
+        weightFare.textContent = ₹${weightAmount.toFixed(2)};
+        wasteBonus.textContent = ₹${bonus.toFixed(2)};
+        totalFare.textContent = ₹${total.toFixed(2)};
         
         // Show result
         fareResult.style.display = 'block';
@@ -498,7 +498,7 @@ calculateTimeBtn.addEventListener('click', () => {
         const estimatedTime = Math.round(baseTime / 5) * 5;
         
         // Update UI
-        timeResultValue.textContent = `${estimatedTime} min`;
+        timeResultValue.textContent = ${estimatedTime} min;
         
         // Show result
         timeResult.style.display = 'block';
@@ -550,7 +550,7 @@ confirmCancelBtn.addEventListener('click', () => {
         }
         
         // Simulate API call to cancel pickup
-        showToast(`Pickup #${currentPickupId} cancelled successfully`, 'success');
+        showToast(Pickup #${currentPickupId} cancelled successfully, 'success');
         
         // In a real application, you would update the pickup status in the database
         // and refresh the pickup list
@@ -759,7 +759,7 @@ function getStatusBadge(status) {
         'cancelled': 'Cancelled'
     };
     
-    return `<span class="${statusClasses[status]}">${statusTexts[status]}</span>`;
+    return <span class="${statusClasses[status]}">${statusTexts[status]}</span>;
 }
 
 // Collector Settings functionality
@@ -803,15 +803,15 @@ collectorCancelSettingsBtn.addEventListener('click', () => {
 
 // Notification toggle functionality
 collectorEmailNotifications.addEventListener('change', function() {
-    showToast(`Email notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
+    showToast(Email notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
 });
 
 collectorSmsNotifications.addEventListener('change', function() {
-    showToast(`SMS notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
+    showToast(SMS notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
 });
 
 collectorPaymentNotifications.addEventListener('change', function() {
-    showToast(`Payment notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
+    showToast(Payment notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
 });
 
 // Animate collector counters
@@ -841,7 +841,7 @@ function showToast(message, type = 'success') {
     const toastIcon = toast.querySelector('.toast-icon');
     
     toastMessage.textContent = message;
-    toast.className = `toast ${type} show`;
+    toast.className = toast ${type} show;
     
     if (type === 'success') {
         toastIcon.className = 'toast-icon fas fa-check-circle';
@@ -854,3 +854,86 @@ function showToast(message, type = 'success') {
         toast.classList.remove('show');
     }, 3000);
 }
+// QR Scanner Elements
+const qrReaderSection = document.getElementById('collectorQRScanner');
+const qrReader = document.getElementById('qr-reader');
+const qrResult = document.getElementById('qr-result');
+const qrResultData = document.getElementById('qr-result-data');
+const resetScannerBtn = document.getElementById('reset-scanner-btn');
+
+// QR Scanner functionality
+let html5QrCode;
+
+// Initialize QR Scanner when section is opened
+document.querySelector('[data-section="collectorQRScanner"]').addEventListener('click', function() {
+    // Only initialize if not already initialized
+    if (!html5QrCode) {
+        initializeQRScanner();
+    }
+});
+
+function initializeQRScanner() {
+    // Clear any previous results
+    qrResult.style.display = 'none';
+    
+    // Create the QR scanner
+    html5QrCode = new Html5Qrcode("qr-reader");
+    
+    const config = { 
+        fps: 10, 
+        qrbox: { width: 250, height: 250 } 
+    };
+    
+    // Start scanning
+    html5QrCode.start(
+        { facingMode: "environment" }, 
+        config,
+        onScanSuccess,
+        onScanFailure
+    ).catch(err => {
+        console.error(Unable to start scanning: ${err});
+        showToast('Unable to access camera. Please check permissions.', 'error');
+    });
+}
+
+function onScanSuccess(decodedText, decodedResult) {
+    // Stop scanning
+    html5QrCode.stop().then(ignore => {
+        // Scanning is stopped.
+    }).catch(err => {
+        console.error(Unable to stop scanning: ${err});
+    });
+    
+    // Display the result
+    qrResultData.innerHTML = `
+        <p><strong>Pickup ID:</strong> ${decodedText}</p>
+        <p><strong>Status:</strong> <span class="status-badge status-pending">Pending</span></p>
+        <p><strong>Customer:</strong> Rajesh Kumar</p>
+        <p><strong>Address:</strong> 45 Park Avenue, Green Hills</p>
+        <p><strong>Weight:</strong> 8.5 kg</p>
+        <p><strong>Type:</strong> Plastic, Paper</p>
+        <p><strong>Estimated Fare:</strong> ₹180</p>
+    `;
+    
+    qrResult.style.display = 'block';
+    
+    // Show success message
+    showToast('QR Code scanned successfully!', 'success');
+}
+
+function onScanFailure(error) {
+    // Handle scan failure silently
+    // console.error(QR Code scan error: ${error});
+}
+
+// Reset scanner button
+resetScannerBtn.addEventListener('click', function() {
+    // Hide result
+    qrResult.style.display = 'none';
+    
+    // Restart scanner
+    if (html5QrCode) {
+        html5QrCode.clear();
+        initializeQRScanner();
+    }
+});
