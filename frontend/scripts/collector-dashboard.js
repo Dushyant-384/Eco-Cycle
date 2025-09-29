@@ -190,7 +190,7 @@ async function fetchAndDisplayPickupHistory() {
         tableBody.innerHTML = ''; // Clear any old data
 
         if (history.length === 0) {
-            tableBody.innerHTML = <tr><td colspan="5" style="text-align: center;">No past pickups found.</td></tr>;
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">No past pickups found.</td></tr>`;
             return;
         }
 
@@ -234,7 +234,7 @@ collectorMainContent.addEventListener('click', async (e) => {
     if (target.classList.contains('accept-job-btn')) {
         if (!token) return showToast('You must be logged in.', 'error');
         try {
-            const response = await fetch(https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}, {
+            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -252,7 +252,7 @@ collectorMainContent.addEventListener('click', async (e) => {
     if (target.classList.contains('complete-pickup-btn')) {
         if (!confirm('Mark this pickup as complete?')) return;
         try {
-            const response = await fetch(https://eco-cycle-hub-api.onrender.com/api/pickups/complete/${pickupId}, {
+            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/complete/${pickupId}`, {
                 method: 'PUT',
                 headers: { 'x-auth-token': token }
             });
@@ -338,7 +338,7 @@ document.getElementById('collectorHome').addEventListener('click', async (e) => 
         }
 
         try {
-            const response = await fetch(https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}, {
+            const response = await fetch(`https://eco-cycle-hub-api.onrender.com/api/pickups/accept/${pickupId}`, {
                 method: 'PUT',
                 headers: {
                     'x-auth-token': token
@@ -455,11 +455,11 @@ calculateFareBtn.addEventListener('click', () => {
         const total = base + distanceAmount + weightAmount + bonus;
         
         // Update UI
-        baseFare.textContent = ₹${base.toFixed(2)};
-        distanceFare.textContent = ₹${distanceAmount.toFixed(2)};
-        weightFare.textContent = ₹${weightAmount.toFixed(2)};
-        wasteBonus.textContent = ₹${bonus.toFixed(2)};
-        totalFare.textContent = ₹${total.toFixed(2)};
+        baseFare.textContent = `₹${base.toFixed(2)}`;
+        distanceFare.textContent = `₹${distanceAmount.toFixed(2)}`;
+        weightFare.textContent = `₹${weightAmount.toFixed(2)}`;
+        wasteBonus.textContent = `₹${bonus.toFixed(2)}`;
+        totalFare.textContent = `₹${total.toFixed(2)}`;
         
         // Show result
         fareResult.style.display = 'block';
@@ -498,7 +498,7 @@ calculateTimeBtn.addEventListener('click', () => {
         const estimatedTime = Math.round(baseTime / 5) * 5;
         
         // Update UI
-        timeResultValue.textContent = ${estimatedTime} min;
+        timeResultValue.textContent = `${estimatedTime} min`;
         
         // Show result
         timeResult.style.display = 'block';
@@ -550,7 +550,7 @@ confirmCancelBtn.addEventListener('click', () => {
         }
         
         // Simulate API call to cancel pickup
-        showToast(Pickup #${currentPickupId} cancelled successfully, 'success');
+        showToast(`Pickup #${currentPickupId} cancelled successfully`, 'success');
         
         // In a real application, you would update the pickup status in the database
         // and refresh the pickup list
@@ -759,7 +759,7 @@ function getStatusBadge(status) {
         'cancelled': 'Cancelled'
     };
     
-    return <span class="${statusClasses[status]}">${statusTexts[status]}</span>;
+    return `<span class="${statusClasses[status]}">${statusTexts[status]}</span>`;
 }
 
 // Collector Settings functionality
@@ -803,15 +803,15 @@ collectorCancelSettingsBtn.addEventListener('click', () => {
 
 // Notification toggle functionality
 collectorEmailNotifications.addEventListener('change', function() {
-    showToast(Email notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
+    showToast(`Email notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
 });
 
 collectorSmsNotifications.addEventListener('change', function() {
-    showToast(SMS notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
+    showToast(`SMS notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
 });
 
 collectorPaymentNotifications.addEventListener('change', function() {
-    showToast(Payment notifications ${this.checked ? 'enabled' : 'disabled'}, 'success');
+    showToast(`Payment notifications ${this.checked ? 'enabled' : 'disabled'}`, 'success');
 });
 
 // Animate collector counters
@@ -841,7 +841,7 @@ function showToast(message, type = 'success') {
     const toastIcon = toast.querySelector('.toast-icon');
     
     toastMessage.textContent = message;
-    toast.className = toast ${type} show;
+    toast.className = `toast ${type} show`;
     
     if (type === 'success') {
         toastIcon.className = 'toast-icon fas fa-check-circle';
